@@ -25,7 +25,10 @@ export const sideHustleData: SideHustle[] = [
     cons: ['需要垫付资金', '汇率波动风险'],
     views: 1240,
     lastUpdated: '2024-12-15',
-    featured: true
+    featured: true,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   {
     id: 2,
@@ -47,7 +50,11 @@ export const sideHustleData: SideHustle[] = [
     pros: ['技术含量高', '客单价高', '长期合作'],
     cons: ['学习成本高', '竞争激烈'],
     views: 890,
-    lastUpdated: '2024-12-14'
+    lastUpdated: '2024-12-14',
+    featured: false,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   {
     id: 3,
@@ -70,7 +77,10 @@ export const sideHustleData: SideHustle[] = [
     cons: ['价格竞争激烈', '利润率低'],
     views: 2100,
     lastUpdated: '2024-12-16',
-    featured: true
+    featured: true,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   // 内容创作类
   {
@@ -93,7 +103,11 @@ export const sideHustleData: SideHustle[] = [
     pros: ['被动收入潜力大', '个人品牌建设', '技能可复用'],
     cons: ['前期收入低', '需要长期坚持', '平台政策风险'],
     views: 2341,
-    lastUpdated: '2024-12-16'
+    lastUpdated: '2024-12-16',
+    featured: false,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   {
     id: 5,
@@ -116,7 +130,10 @@ export const sideHustleData: SideHustle[] = [
     cons: ['内容同质化竞争', '需要持续输出'],
     views: 1876,
     lastUpdated: '2024-12-15',
-    featured: true
+    featured: true,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   // 跨境贸易类
   {
@@ -139,7 +156,11 @@ export const sideHustleData: SideHustle[] = [
     pros: ['市场空间大', '可扩展性强', '美元收入'],
     cons: ['前期投入大', '政策风险', '竞争激烈'],
     views: 1432,
-    lastUpdated: '2024-12-14'
+    lastUpdated: '2024-12-14',
+    featured: false,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   {
     id: 7,
@@ -161,7 +182,11 @@ export const sideHustleData: SideHustle[] = [
     pros: ['蓝海市场', 'B2B服务稳定', '可批量化'],
     cons: ['文化差异', '汇率风险'],
     views: 987,
-    lastUpdated: '2024-12-13'
+    lastUpdated: '2024-12-13',
+    featured: false,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   // 知识服务类
   {
@@ -185,7 +210,10 @@ export const sideHustleData: SideHustle[] = [
     cons: ['技术更新快', '制作周期长'],
     views: 1654,
     lastUpdated: '2024-12-12',
-    featured: true
+    featured: true,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   {
     id: 9,
@@ -207,7 +235,11 @@ export const sideHustleData: SideHustle[] = [
     pros: ['市场需求旺盛', '时薪高', '技能前沿'],
     cons: ['技术更新快', '需要持续学习'],
     views: 2890,
-    lastUpdated: '2024-12-17'
+    lastUpdated: '2024-12-17',
+    featured: false,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   },
   // 生活服务类
   {
@@ -230,7 +262,11 @@ export const sideHustleData: SideHustle[] = [
     pros: ['门槛低', '现金流好', '工作灵活'],
     cons: ['收入有限', '体力消耗大', '责任风险'],
     views: 1123,
-    lastUpdated: '2024-12-11'
+    lastUpdated: '2024-12-11',
+    featured: false,
+    status: 'draft',
+    createdAt: undefined,
+    updatedAt: undefined
   }
 ];
 
