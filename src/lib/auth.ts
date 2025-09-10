@@ -1,7 +1,6 @@
-// src/lib/auth.ts - 认证相关工具
+// src/lib/auth.ts - 简化版认证
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { UserDB } from './database';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -19,7 +18,7 @@ export class AuthService {
   }
 
   static async hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, 12);
+    return bcrypt.hash(password, 10); // 简化为 10 rounds
   }
 
   static generateToken(payload: { userId: string; email: string; role: string }): string {
@@ -35,35 +34,18 @@ export class AuthService {
   }
 
   static async authenticateUser(email: string, password: string) {
-    // 首先检查是否是管理员环境变量登录
+    // 简化版：直接检查环境变量
     const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+    const adminPassword = process.env.ADMIN_PASSWORD;
     
-    if (email === adminEmail && adminPasswordHash) {
-      const isValid = await this.verifyPassword(password, adminPasswordHash);
-      if (isValid) {
-        return {
-          id: 'admin',
-          email: adminEmail,
-          role: 'admin'
-        };
-      }
+    if (email === adminEmail && password === adminPassword) {
+      return {
+        id: 'admin-001',
+        email: adminEmail,
+        role: 'admin'
+      };
     }
 
-    // 数据库用户验证
-    const user = await UserDB.findByEmail(email);
-    if (!user) return null;
-
-    const isValid = await this.verifyPassword(password, user.passwordHash);
-    if (!isValid) return null;
-
-    await UserDB.updateLastLogin(email);
-
-    return {
-      id: user._id!,
-      email: user.email,
-      role: user.role
-    };
+    return null; // 登录失败
   }
 }
-
