@@ -61,6 +61,16 @@ async function testConnection() {
   } catch (error) {
     const err = error as Error;
     console.error('❌ MongoDB 连接失败:', err.message);
+    
+    // 更详细的错误信息
+    if (err.message.includes('Authentication failed')) {
+      console.error('🔐 认证失败 - 请检查用户名和密码');
+    } else if (err.message.includes('ENOTFOUND')) {
+      console.error('🌐 网络错误 - 请检查网络连接和集群地址');
+    } else if (err.message.includes('Cannot read properties of undefined')) {
+      console.error('🔧 连接对象错误 - 请检查 MONGODB_URI 格式');
+    }
+    
     console.error('🔧 请检查:');
     console.error('   1. .env.local 文件中的 MONGODB_URI 是否正确');
     console.error('   2. MongoDB Atlas 网络访问设置');
