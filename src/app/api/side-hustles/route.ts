@@ -1,6 +1,6 @@
-// src/app/api/side-hustles/route.ts - 副业信息CRUD API
+// 修复 src/app/api/side-hustles/route.ts
 import { NextRequest } from 'next/server';
-import { SideHustleDB } from '@/lib/database';
+import { SideHustleDB } from '@/lib/database'; // 添加这行导入
 import { verifyAuthToken } from '@/lib/middleware';
 
 export async function GET(request: NextRequest) {
@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
     const results = await SideHustleDB.getAll(status);
     return Response.json({ success: true, data: results });
   } catch (error) {
-    console.error('Get side hustles error:', error);
+    const err = error as Error;
+    console.error('Get side hustles error:', err.message);
     return Response.json(
       { success: false, message: '获取数据失败' },
       { status: 500 }
@@ -28,7 +29,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // 验证管理员权限
     const user = verifyAuthToken(request);
     if (!user) {
       return Response.json(
@@ -39,7 +39,6 @@ export async function POST(request: NextRequest) {
 
     const data = await request.json();
     
-    // 验证必需字段
     const requiredFields = ['title', 'category', 'description', 'tools', 'pricing', 'difficulty'];
     for (const field of requiredFields) {
       if (!data[field]) {
@@ -62,7 +61,8 @@ export async function POST(request: NextRequest) {
       message: '创建成功'
     });
   } catch (error) {
-    console.error('Create side hustle error:', error);
+    const err = error as Error;
+    console.error('Create side hustle error:', err.message);
     return Response.json(
       { success: false, message: '创建失败' },
       { status: 500 }
