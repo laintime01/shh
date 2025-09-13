@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Code, Eye, ChevronDown, AlertCircle, Loader } from 'lucide-react';
 
 // 定义数据类型
@@ -52,7 +52,7 @@ export default function HomePage() {
   };
 
   // 获取副业数据
-  const fetchSideHustles = async () => {
+  const fetchSideHustles = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
@@ -76,7 +76,7 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, selectedCategory]);
 
   // 增加浏览次数
   const incrementViews = async (id: number) => {

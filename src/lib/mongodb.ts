@@ -1,4 +1,4 @@
-// src/lib/mongodb.ts - 更新版本，启动时自动连接和测试
+// src/lib/mongodb.ts - 修复类型错误版本
 import { MongoClient } from 'mongodb';
 
 if (!process.env.MONGODB_URI) {
@@ -16,15 +16,21 @@ let clientPromise: Promise<MongoClient>;
 let isConnected = false;
 let connectionError: Error | null = null;
 
+// 全局类型扩展
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
+
 if (process.env.NODE_ENV === 'development') {
-  if (!(global as any)._mongoClientPromise) {
+  if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
-    (global as any)._mongoClientPromise = client.connect();
+    global._mongoClientPromise = client.connect();
     
     // 启动时测试连接
     testConnection();
   }
-  clientPromise = (global as any)._mongoClientPromise;
+  clientPromise = global._mongoClientPromise;
 } else {
   client = new MongoClient(uri, options);
   clientPromise = client.connect();

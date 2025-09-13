@@ -1,4 +1,4 @@
-// src/lib/middleware.ts - 中间件工具
+// src/lib/middleware.ts - 修复类型错误版本
 import { NextRequest } from 'next/server';
 import { AuthService } from './auth';
 
@@ -19,7 +19,7 @@ export function verifyAuthToken(request: NextRequest) {
   return AuthService.verifyToken(token);
 }
 
-export function createAuthResponse(success: boolean, data?: any, message?: string) {
+export function createAuthResponse(success: boolean, data?: unknown, message?: string) {
   return Response.json({
     success,
     data,

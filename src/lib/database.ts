@@ -1,11 +1,31 @@
-// src/lib/database.ts - 完全修复版本
-import { ObjectId } from 'mongodb';
+// src/lib/database.ts - 修复所有类型错误
+import { ObjectId, Document } from 'mongodb';
 import clientPromise, { getConnectionStatus } from './mongodb';
 import { SideHustle, AdminUser } from './types';
 
 const DB_NAME = 'side-hustle-hub';
 const COLLECTION_SIDE_HUSTLES = 'side_hustles';
 const COLLECTION_USERS = 'users';
+
+// MongoDB 查询接口
+interface MongoQuery {
+  [key: string]: unknown;
+  status?: string;
+  category?: string;
+  $or?: Array<{
+    [key: string]: unknown;
+  }>;
+}
+
+interface MongoIdQuery {
+  [key: string]: unknown;
+  _id?: ObjectId;
+  id?: number;
+  $or?: Array<{
+    _id?: ObjectId;
+    id?: number;
+  }>;
+}
 
 // 副业信息相关操作
 export class SideHustleDB {
@@ -25,7 +45,7 @@ export class SideHustleDB {
       const db = client.db(DB_NAME);
       const collection = db.collection(COLLECTION_SIDE_HUSTLES);
       
-      const query = status === 'all' ? {} : { status };
+      const query: MongoQuery = status === 'all' ? {} : { status };
       const result = await collection
         .find(query)
         .sort({ featured: -1, lastUpdated: -1 })
@@ -41,8 +61,6 @@ export class SideHustleDB {
     } catch (error) {
       const err = error as Error;
       console.error('❌ 获取数据失败:', err.message);
-      
-      // 如果数据库连接失败，返回空数组或静态数据
       console.log('💡 数据库连接失败，请检查连接状态');
       return [];
     }
@@ -55,7 +73,7 @@ export class SideHustleDB {
       const collection = db.collection(COLLECTION_SIDE_HUSTLES);
       
       // 构建查询条件，处理 ObjectId 和数字 ID
-      let query: any;
+      let query: MongoIdQuery;
       
       // 检查是否是有效的 ObjectId
       if (ObjectId.isValid(id) && id.length === 24) {
@@ -136,7 +154,7 @@ export class SideHustleDB {
     };
     
     // 构建查询条件，处理 ObjectId 和数字 ID
-    let query: any;
+    let query: MongoIdQuery;
     
     if (ObjectId.isValid(id) && id.length === 24) {
       const numericId = parseInt(id);
@@ -182,7 +200,7 @@ export class SideHustleDB {
     const collection = db.collection(COLLECTION_SIDE_HUSTLES);
     
     // 构建查询条件
-    let query: any;
+    let query: MongoIdQuery;
     
     if (ObjectId.isValid(id) && id.length === 24) {
       const numericId = parseInt(id);
@@ -221,7 +239,7 @@ export class SideHustleDB {
       const collection = db.collection(COLLECTION_SIDE_HUSTLES);
       
       // 构建查询条件
-      let query: any;
+      let query: MongoIdQuery;
       
       if (ObjectId.isValid(id) && id.length === 24) {
         const numericId = parseInt(id);
@@ -258,7 +276,7 @@ export class SideHustleDB {
       const db = client.db(DB_NAME);
       const collection = db.collection(COLLECTION_SIDE_HUSTLES);
       
-      const query: any = {};
+      const query: MongoQuery = {};
       
       // 状态筛选
       if (status !== 'all') {
@@ -322,7 +340,7 @@ export class SideHustleDB {
       ];
       
       // 安全地处理 categories 数组
-      categories.forEach((cat: any) => {
+      categories.forEach((cat: Document) => {
         if (cat && typeof cat.name === 'string' && typeof cat.count === 'number') {
           categoryList.push({
             name: cat.name,

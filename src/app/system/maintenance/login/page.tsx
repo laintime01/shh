@@ -1,5 +1,7 @@
 'use client';
 
+// 在文件顶部添加导入
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { Settings, Eye, EyeOff, AlertCircle, CheckCircle, Shield } from 'lucide-react';
 
@@ -260,12 +262,9 @@ export default function MaintenancePortal() {
 
         {/* 底部伪装链接 */}
         <div className="mt-8 text-center">
-          <a 
-            href="/" 
-            className="text-blue-300 hover:text-blue-200 text-sm transition-colors"
-          >
-            ← 返回主站点
-          </a>
+        <Link href="/" className="text-blue-300 hover:text-blue-200 text-sm transition-colors">
+              ← 返回主站点
+          </Link>
         </div>
       </div>
     </div>
